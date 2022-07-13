@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
 import com.google.inject.Singleton
+import com.slabstech.readme.App
 import io.dropwizard.setup.Environment
 
 import org.slf4j.Logger
@@ -12,8 +13,7 @@ import org.slf4j.LoggerFactory
 
 abstract class BaseAppModule : AbstractModule() {
     override fun configure() {
-        bind(StateEventMapper::class.java).to(NoopMapper::class.java)
-       
+
     }
 
     @Provides
