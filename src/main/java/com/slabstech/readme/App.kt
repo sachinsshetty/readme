@@ -16,7 +16,7 @@ import com.slabstech.readme.github.GithubUser
 import com.slabstech.readme.github.GithubServiceGenerator
 import com.slabstech.readme.github.GithubUserService
 
-class App : Application<AppConfiguration?>() {
+open class App : Application<AppConfiguration?>() {
     override fun getName(): String {
         return "App"
     }
@@ -45,12 +45,13 @@ class App : Application<AppConfiguration?>() {
 
         // Using GitHubServiceGenerator
         var service = GithubServiceGenerator.createService(GithubUserService::class.java)
-        val callSync: Call<GithubUser?>? = service.getGithubUser("sachinsshetty")
-        val callAsync: Call<GithubUser?>? = service.getGithubUser("sachinsshetty")
+        val callSync: Call<GithubUser> = service.getGithubUser("sachinsshetty")
+        val callAsync: Call<GithubUser> = service.getGithubUser("sachinsshetty")
         try {
-            val response: Response<GithubUser?> = (callSync?.execute() ?: null) as Response<GithubUser?>
-            val GithubUser: GithubUser? = response.body()
-            println(GithubUser)
+            val response : Response<GithubUser> = callSync.execute()
+
+            val githubUser: GithubUser? = response.body()
+            println(githubUser)
         } catch (ex: IOException) {
         }
 
@@ -58,8 +59,8 @@ class App : Application<AppConfiguration?>() {
         if (callAsync != null) {
             callAsync.enqueue(object : Callback<GithubUser?> {
                 override fun onResponse(call: Call<GithubUser?>?, response: Response<GithubUser?>) {
-                    val GithubUser: GithubUser? = response.body()
-                    System.out.println(GithubUser)
+                    val githubUser: GithubUser? = response.body()
+                    println(githubUser)
                 }
 
                 override fun onFailure(call: Call<GithubUser?>?, throwable: Throwable?) {
