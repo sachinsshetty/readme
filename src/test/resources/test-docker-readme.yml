@@ -1,0 +1,64 @@
+template: Hello, %s!
+defaultName: Stranger
+
+database:
+  driverClass: org.postgresql.Driver
+  user: ${POSTGRES_USER:-postgres}
+  password: ${POSTGRES_PASSWORD:-}
+  url: jdbc:postgresql://${POSTGRES_HOST:-localhost}:${POSTGRES_PORT:-5432}/${POSTGRES_DATABASE:-postgres}?prepareThreshold=0&preparedStatementCacheQueries=0
+  defaultTransactionIsolation: read-committed
+  properties:
+    charSet: UTF-8
+  maxWaitForConnection: 1s
+  validationQuery: "/* readme database health check */ SELECT 1"
+  initialSize: 0
+  minSize: 0
+  maxSize: 20
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8081
+  requestLog:
+    appenders:
+      - type: console
+        layout:
+          type: access-json
+          timestampFormat: "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        filterFactories:
+          - type: uri
+            uris:
+              - "/ping"
+              - "/health"
+
+# Logging settings.
+logging:
+  level: INFO
+  appenders:
+    - type: console
+    - type: file
+      currentLogFilename: './logs/application.log'
+      archivedLogFilenamePattern: './logs/application-%d-%i.log.gz'
+      archive: true
+      archivedFileCount: 7
+      maxFileSize: '1MiB'
+
+# Health settings
+health:
+  delayedShutdownHandlerEnabled: true
+  shutdownWaitPeriod: 1s
+  healthChecks:
+    - name: deadlocks
+      type: alive
+    - name: hibernate
+      type: ready
+      critical: true
+    - name: template
+      type: ready
+      critical: true
+      schedule:
+        checkInterval: 1s
+        downtimeInterval: 2s

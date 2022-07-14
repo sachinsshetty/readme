@@ -33,22 +33,23 @@ jobs:
         with:
           name: Test report
           path: build/reports/tests/test
-  push-deploy:
-    name: push-deploy
-    runs-on : ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - name: deploy-container-to-registry
-        uses: slabstech/action-deploy-container-to-registry@v0.0.1
-        with:
-          docker-username: ${{ secrets.DOCKER_USERNAME }}
-          docker-password: ${{ secrets.DOCKER_PASSWORD }}
-          github-actor: ${{ github.actor }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          github-repository: ${{ github.repository }}
-          project-name: readme
-          service-name: all
-          dockerfile-path: ./Dockerfile
+
+#  push-deploy:
+#    name: push-deploy
+#    runs-on : ubuntu-latest
+#    permissions:
+#      packages: write
+#      contents: read
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: deploy-container-to-registry
+#        uses: slabstech/action-deploy-container-to-registry@v0.0.1
+#        with:
+#          docker-username: ${{ secrets.DOCKER_USERNAME }}
+#          docker-password: ${{ secrets.DOCKER_PASSWORD }}
+#          github-actor: ${{ github.actor }}
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          github-repository: ${{ github.repository }}
+#          project-name: readme
+#          service-name: all
+#          dockerfile-path: ./Dockerfile
