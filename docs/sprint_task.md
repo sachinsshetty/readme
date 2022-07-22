@@ -11,3 +11,7 @@
   * https://github.com/jdemattos/kotlin-dropwizard-pet-license-service
 * kotlin - https://github.com/Baeldung/kotlin-tutorials 
 * Working with date : https://www.baeldung.com/kotlin/dates
+
+* mocking retrofit library
+  * https://riggaroo.dev/retrofit-2-mocking-http-responses/
+  * https://sachinkmr375.medium.com/unit-test-retrofit-api-calls-with-mockwebserver-bbb9f66a78a6
